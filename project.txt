@@ -1,0 +1,34 @@
+property crm:
+ => users (customer, employee, super admin)
+ => roles => url, roles 
+[
+    {
+        role: "super admin",
+        urls:[
+            url string ,method string  ,params [],qery[]
+            "addUser", "addbuild", ....
+        ]
+    }
+    //جدول للروز وجدول لليورلز
+    //جدول فيه كل رول بلروتس بتاعته
+]
+rolemodel=>title,virual
+urlsmodel=>roleid,urls,method,params,qwery
+
+ => projects 
+ => project types (for show, for buy)
+ => buildings => floors => units => price (status=> bought, false) for each floor has 4 units
+ => payments => unit has customer and payment table
+ => reciept => pdf
+
+- projects => types => buy, show
+- projects=> build(number, area) => adwar=> each dour has 4 units
+- accountant => 1 c => 5 => 51 => bought
+- payments => down payment, 
+ربع سنوى => قيمه القسط 
+نص سنوي
+كاش
+
+ايصال => export pdf
+
+corn job

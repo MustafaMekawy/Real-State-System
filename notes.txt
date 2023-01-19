@@ -1,0 +1,56 @@
+user=>
+ - login *
+ - get profile *
+ - edit profile => if logged in *
+ - logout *
+ - change status *
+ - edit password*
+ - delete account*
+ - forget password
+ - reset password
+    show all projects*
+    show single project*
+    show all building*
+    show single build*
+    show all uints*
+    show single uint*
+ --------------------------------
+ admin :
+ rejester any user*
+ delete any user*
+ creatrole *
+ addurl*
+ -----------------------
+ employee:
+ rejester an customer*
+ buy uint for user   : throw to link payments => كاش =>set avalible==false=> add unitId in user=> ايصال
+                                              => قسط => types of premium =>set avalible==false=> add unitId in user=> ايصال  
+ payments: cash , premium 
+ premium types :  Semi-yearly,  Quarterly
+ show all uints bought*
+ show all uints avalible*
+ --------------------
+ customer:
+get my uints* ناقص امسح اليوز من العرض
+get my اقساط*
+show ايصالات*
+generat pdf *
+ --------------------
+role=>creatrole *,addurl*
+-----------------------------------------
+
+uint=>userID+paymentID
+
+user {uints}
+
+uint{
+}
+user uinst payment
+payment model{
+    unitId
+    userid 
+    paymenttype,
+    restofpayment
+}
+
+
