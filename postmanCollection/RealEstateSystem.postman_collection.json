@@ -1,0 +1,630 @@
+{
+	"info": {
+		"_postman_id": "9bb702ed-d5e7-494f-8b8d-b12221e57dbe",
+		"name": "RealEstateSystem",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24898486"
+	},
+	"item": [
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "rejester",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"roleId\":\"63a99c3d7a59b58658bfc8f5\",\r\n    \"fName\":\"ahmed\",\r\n     \"lName\":\"mohamed\",\r\n     \"email\":\"ahmed@gmail.com\",\r\n     \"password\":\"123456789\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Userurl}}rejester",
+							"host": [
+								"{{Userurl}}rejester"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"token\", pm.response.json().data.token);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"ahmed@gmail.com\",\r\n     \"password\":\"123456789\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Userurl}}login",
+							"host": [
+								"{{Userurl}}login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Userurl}}profile",
+							"host": [
+								"{{Userurl}}profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "editprofile",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "editpassword",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "changeStatus",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "deleteaccount",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteAnyUser",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "roles",
+			"item": [
+				{
+					"name": "creatRole",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"roleTitle\":\"employee\",\r\n    \"urls\":[{\"url\":\"/login\",\"method\":\"post\",\"param\":\"id\"}, {\"url\":\"/rejster\",\"method\":\"post\"}]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{roleurl}}creatrole",
+							"host": [
+								"{{roleurl}}creatrole"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddUrl",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"url\":\"/logout\",\"method\":\"get\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{roleurl}}AddUrl/63a99c3d7a59b58658bfc8f5",
+							"host": [
+								"{{roleurl}}AddUrl"
+							],
+							"path": [
+								"63a99c3d7a59b58658bfc8f5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "projects",
+			"item": [
+				{
+					"name": "CreatProject",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"tgmg el 6\",\r\n    \"projectType\":\"buy\",\r\n    \"Areas\":[\"a\",\"b\",\"c\",\"z\"]\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{projectUrl}}createproject",
+							"host": [
+								"{{projectUrl}}createproject"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "showallprojects",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{projectUrl}}showallprojects",
+							"host": [
+								"{{projectUrl}}showallprojects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "showproject",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{projectUrl}}showproject/63ac58cb7d116c2d92051ff5",
+							"host": [
+								"{{projectUrl}}showproject"
+							],
+							"path": [
+								"63ac58cb7d116c2d92051ff5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "builds",
+			"item": [
+				{
+					"name": "CreatBuild",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"projectId\":\"63a9b122c76a01207dbd9d63\",\r\n    \"area\":\"a\",\r\n    \"buildNum\":\"1\",\r\n    \"numoffloors\":\"6\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{buildUrl}}createbuild",
+							"host": [
+								"{{buildUrl}}createbuild"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "showAllBuilds",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{buildUrl}}showAllBuilds",
+							"host": [
+								"{{buildUrl}}showAllBuilds"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "showBuild",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{buildUrl}}showBuild/63a9ce4b821d6416055df9f5",
+							"host": [
+								"{{buildUrl}}showBuild"
+							],
+							"path": [
+								"63a9ce4b821d6416055df9f5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "uints",
+			"item": [
+				{
+					"name": "createuint",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"buildId\":\"63a9ce3f821d6416055df9f2\",\r\n    \"unitNumber\":\"14\",\r\n    \"price\":\"200\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{uintUrl}}createuint",
+							"host": [
+								"{{uintUrl}}createuint"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "showuint",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{uintUrl}}showuint/63a9d28a4a264d3ebaf4e075",
+							"host": [
+								"{{uintUrl}}showuint"
+							],
+							"path": [
+								"63a9d28a4a264d3ebaf4e075"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buyuint",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"customer\":\"63c807c9a1e598f0f193bd78\",\r\n    \"payment\":\"quarter-yearly\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{uintUrl}}buyuint/63c816090d9b0dbbdd572d22",
+							"host": [
+								"{{uintUrl}}buyuint"
+							],
+							"path": [
+								"63c816090d9b0dbbdd572d22"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "showAllUint",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{uintUrl}}showAllUint",
+							"host": [
+								"{{uintUrl}}showAllUint"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ShowAllUintsBought",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{uintUrl}}ShowAllUintsBought",
+							"host": [
+								"{{uintUrl}}ShowAllUintsBought"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ShowAllUintsAvalible",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{uintUrl}}ShowAllUintsAvalible",
+							"host": [
+								"{{uintUrl}}ShowAllUintsAvalible"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ShowMyUints",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{uintUrl}}ShowMyUints",
+							"host": [
+								"{{uintUrl}}ShowMyUints"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ShowMyPayments",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{uintUrl}}ShowMyPayments",
+							"host": [
+								"{{uintUrl}}ShowMyPayments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addInstallment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"customer\":\"63c807c9a1e598f0f193bd78\",\r\n    \"uint\":\"63c816090d9b0dbbdd572d22\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{uintUrl}}addInstallment",
+							"host": [
+								"{{uintUrl}}addInstallment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "generate pdf",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/pdf/invoice/63c816090d9b0dbbdd572d22",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"pdf",
+								"invoice",
+								"63c816090d9b0dbbdd572d22"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "employee",
+			"item": [
+				{
+					"name": "registerCustmoer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"roleId\":\"63a994ef7a59b58658bfc88b\",\r\n    \"fName\":\"ahmed\",\r\n     \"lName\":\"galal\",\r\n     \"email\":\"galal@gmail.com\",\r\n     \"password\":\"123456789\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Userurl}}registerCustmoer",
+							"host": [
+								"{{Userurl}}registerCustmoer"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "roleurl",
+			"value": "http://localhost:3000/api/role/",
+			"type": "string"
+		}
+	]
+}
