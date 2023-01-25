@@ -7,16 +7,37 @@
 	},
 	"item": [
 		{
-			"name": "users",
+			"name": "auth",
 			"item": [
 				{
 					"name": "rejester",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"roleId\":\"63a99c3d7a59b58658bfc8f5\",\r\n    \"fName\":\"ahmed\",\r\n     \"lName\":\"mohamed\",\r\n     \"email\":\"ahmed@gmail.com\",\r\n     \"password\":\"123456789\"\r\n}",
+							"raw": "{\r\n    \"roleId\":\"63a994ef7a59b58658bfc88b\",\r\n     \"fName\": \"aaaa\",\r\n    \"lName\":\"aaaaaa\",\r\n    \"email\":\"oaaaa@gmail.con\",\r\n    \"password\":\"123456789\",\r\n    \"passwordConfirmation\": \"123456789\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -51,7 +72,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"ahmed@gmail.com\",\r\n     \"password\":\"123456789\"\r\n}",
+							"raw": "{\r\n    \"email\":\"oa@gmail.con\",\r\n    \"password\":\"123456789\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -67,6 +88,122 @@
 					},
 					"response": []
 				},
+				{
+					"name": "editpassword",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\":\"12345678910\",\r\n    \"newPassword\":\"123456789\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Userurl}}editpassword",
+							"host": [
+								"{{Userurl}}editpassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forgetpassword",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"mk@gmail.con\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Userurl}}forgetpassword",
+							"host": [
+								"{{Userurl}}forgetpassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "resetpassword",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\":\"12345678910\",\r\n    \"passwordConfirmation\":\"12345678910\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/user/resetpassword/9d17fe7fdab35f439229ba02bb1723f2056131e22767a9867f0e283af10c17f8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user",
+								"resetpassword",
+								"9d17fe7fdab35f439229ba02bb1723f2056131e22767a9867f0e283af10c17f8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Userurl}}logout",
+							"host": [
+								"{{Userurl}}logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
 				{
 					"name": "profile",
 					"request": {
@@ -100,26 +237,26 @@
 					"response": []
 				},
 				{
-					"name": "logout",
-					"request": {
-						"method": "GET",
-						"header": []
-					},
-					"response": []
-				},
-				{
-					"name": "editpassword",
-					"request": {
-						"method": "GET",
-						"header": []
-					},
-					"response": []
-				},
-				{
 					"name": "changeStatus",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "{{Userurl}}changeStatus",
+							"host": [
+								"{{Userurl}}changeStatus"
+							]
+						}
 					},
 					"response": []
 				},
@@ -134,8 +271,61 @@
 				{
 					"name": "DeleteAnyUser",
 					"request": {
-						"method": "GET",
-						"header": []
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{Userurl}}DeleteAnyUser/63d1712e813f847a4e91b4a6",
+							"host": [
+								"{{Userurl}}DeleteAnyUser"
+							],
+							"path": [
+								"63d1712e813f847a4e91b4a6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateImage",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/D:/Database Fundamentals.pdf"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{Userurl}}UpdateImage",
+							"host": [
+								"{{Userurl}}UpdateImage"
+							]
+						}
 					},
 					"response": []
 				}
@@ -161,7 +351,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"roleTitle\":\"employee\",\r\n    \"urls\":[{\"url\":\"/login\",\"method\":\"post\",\"param\":\"id\"}, {\"url\":\"/rejster\",\"method\":\"post\"}]\r\n}",
+							"raw": "{\r\n    \"roleTitle\":\"admin\",\r\n    \"urls\":{\"url\":\"/editpassword\",\"method\":\"post\",\"param\":\"id\"}\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -194,7 +384,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n   \"url\":\"/logout\",\"method\":\"get\"\r\n}",
+							"raw": "{\r\n   \"url\":\"/api/user/rejster\",\"method\":\"post\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -221,16 +411,53 @@
 				{
 					"name": "CreatProject",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"tgmg el 6\",\r\n    \"projectType\":\"buy\",\r\n    \"Areas\":[\"a\",\"b\",\"c\",\"z\"]\r\n\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "jhjhjhj",
+									"type": "text"
+								},
+								{
+									"key": "projectType",
+									"value": "buy",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/manom/OneDrive/Desktop/d8959179366149.Y3JvcCw4MDgsNjMyLDAsMA (1).png"
+								},
+								{
+									"key": "Areas[0]",
+									"value": "a",
+									"contentType": "application/json",
+									"type": "text"
+								},
+								{
+									"key": "Areas[1]",
+									"value": "b",
+									"type": "text"
+								},
+								{
+									"key": "Areas[2]",
+									"value": "c",
+									"type": "text"
 								}
-							}
+							]
 						},
 						"url": {
 							"raw": "{{projectUrl}}createproject",
@@ -258,15 +485,25 @@
 				{
 					"name": "showproject",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{projectUrl}}showproject/63ac58cb7d116c2d92051ff5",
+							"raw": "{{projectUrl}}showproject/63a9b122c76a01207dbd9d63",
 							"host": [
 								"{{projectUrl}}showproject"
 							],
 							"path": [
-								"63ac58cb7d116c2d92051ff5"
+								"63a9b122c76a01207dbd9d63"
 							]
 						}
 					},
@@ -280,16 +517,47 @@
 				{
 					"name": "CreatBuild",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"projectId\":\"63a9b122c76a01207dbd9d63\",\r\n    \"area\":\"a\",\r\n    \"buildNum\":\"1\",\r\n    \"numoffloors\":\"6\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "projectId",
+									"value": "63d15611bec57289e15e222f",
+									"type": "text"
+								},
+								{
+									"key": "buildNum",
+									"value": "7",
+									"type": "text"
+								},
+								{
+									"key": "area",
+									"value": "b",
+									"type": "text"
+								},
+								{
+									"key": "numoffloors",
+									"value": "6",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/manom/OneDrive/Desktop/images.jpg"
 								}
-							}
+							]
 						},
 						"url": {
 							"raw": "{{buildUrl}}createbuild",
@@ -339,16 +607,42 @@
 				{
 					"name": "createuint",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"buildId\":\"63a9ce3f821d6416055df9f2\",\r\n    \"unitNumber\":\"14\",\r\n    \"price\":\"200\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "buildId",
+									"value": "63a9ce3f821d6416055df9f2",
+									"type": "text"
+								},
+								{
+									"key": "unitNumber",
+									"value": "61",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "300",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/manom/OneDrive/Desktop/images (1).jpg"
 								}
-							}
+							]
 						},
 						"url": {
 							"raw": "{{uintUrl}}createuint",
@@ -379,11 +673,21 @@
 				{
 					"name": "buyuint",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"customer\":\"63c807c9a1e598f0f193bd78\",\r\n    \"payment\":\"quarter-yearly\"\r\n}",
+							"raw": "{\r\n    \"customer\":\"63d1870f586d4f02850821a9\",\r\n    \"payment\":\"quarter-yearly\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -391,12 +695,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{uintUrl}}buyuint/63c816090d9b0dbbdd572d22",
+							"raw": "{{uintUrl}}buyuint/63d16a37b605c7331b9a55df",
 							"host": [
 								"{{uintUrl}}buyuint"
 							],
 							"path": [
-								"63c816090d9b0dbbdd572d22"
+								"63d16a37b605c7331b9a55df"
 							]
 						}
 					},
@@ -509,7 +813,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"customer\":\"63c807c9a1e598f0f193bd78\",\r\n    \"uint\":\"63c816090d9b0dbbdd572d22\"\r\n}",
+							"raw": "{\r\n    \"customer\":\"63d1870f586d4f02850821a9\",\r\n    \"uint\":\"63d16a37b605c7331b9a55df\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -553,7 +857,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/pdf/invoice/63c816090d9b0dbbdd572d22",
+							"raw": "http://localhost:3000/api/pdf/invoice/63d16a37b605c7331b9a55df",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -563,35 +867,7 @@
 								"api",
 								"pdf",
 								"invoice",
-								"63c816090d9b0dbbdd572d22"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "employee",
-			"item": [
-				{
-					"name": "registerCustmoer",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"roleId\":\"63a994ef7a59b58658bfc88b\",\r\n    \"fName\":\"ahmed\",\r\n     \"lName\":\"galal\",\r\n     \"email\":\"galal@gmail.com\",\r\n     \"password\":\"123456789\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{Userurl}}registerCustmoer",
-							"host": [
-								"{{Userurl}}registerCustmoer"
+								"63d16a37b605c7331b9a55df"
 							]
 						}
 					},

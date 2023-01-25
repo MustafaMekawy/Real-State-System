@@ -5,12 +5,15 @@ class Build{
     static createBuild=async(req,res)=>{
         try{
            const project = await projectModel.findById(req.body.projectId)    
+           if(!project)throw new Error("project not found!!!")
+           const obj={projectId:req.body.projectId,area:req.body.area,buildNum:req.body.buildNum,numoffloors:req.body.numoffloors ,image:req.file.path}
            const areaCheck= project.Areas.find(a=>{
-                if(req.body.area==a) return true
+                 return obj.area==a
             })
             if(!areaCheck) throw new Error(`area ${req.body.area} not exist in project Areas`)
-
-            const build= new buildModel(req.body)
+            const uniqeBuildNum=await buildModel.findOne({projectId:obj.projectId,buildNum:obj.buildNum,area:obj.area})
+            if(uniqeBuildNum)throw new Error("build Number must be uinqe ")
+            const build= new buildModel(obj)
             await build.save()
             myhelper.resHandler(res,200,true,build,"build added successfully")
         }

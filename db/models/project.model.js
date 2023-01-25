@@ -14,6 +14,10 @@ const projectsSchema=mongoose.Schema({
         Areas:{
             type:[],
             required:true,
+        },
+        image:{
+            type:String, 
+            trim:true
         }
     })
 const project=mongoose.model("Project",projectsSchema)

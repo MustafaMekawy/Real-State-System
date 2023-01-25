@@ -1,6 +1,8 @@
 const router=require("express").Router()
 const project=require("../app/controllers/project.controller")
-router.post("/createProject",project.createProject)
+const upload=require("../app/middleware/fileUpload.middleware")
+const {auth,permessions} =require("../app/middleware/auth.middleware")
+router.post("/createProject",auth,permessions,upload.single("image"),project.createProject)
 router.get("/showallprojects",project.showallprojects)
 router.get("/showproject/:id",project.showproject)
 module.exports=router

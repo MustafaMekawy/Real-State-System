@@ -1,13 +1,20 @@
 const uintModel=require("../../db/models/uint.model")
 const userModel=require("../../db/models/user.model")
+const buildModel=require("../../db/models/build.model")
 const PaymentModel=require("../../db/models/payment.model")
 const myhelper=require("../helper")
 class Uint{
     static createuint=async(req,res)=>{
         try{
-            const splitUnit=req.body.unitNumber.split("")
+            const obj={buildId:req.body.buildId,unitNumber:req.body.unitNumber,price:req.body.price,image:req.file.path}
+            const build=await buildModel.findById(obj.buildId)
+            if(!build)throw new Error("wrong build id not found")
+            const splitUnit=obj.unitNumber.split("")
             if(splitUnit[1]>4) throw new Error("max num of unit is 4")
-            const uint= new uintModel(req.body)
+            if(splitUnit[0]>build.numoffloors)throw new Error(`number of floor in that build is ${build.numoffloors}`)
+            const uniqeUintNum=await uintModel.findOne({buildId:obj.buildId,unitNumber:obj.unitNumber})
+            if(uniqeUintNum) throw new Error("uint num of that build is exest")
+            const uint= new uintModel(obj)
             await uint.save()
             myhelper.resHandler(res,200,true,uint,"uint added successfully")
         }
@@ -41,7 +48,7 @@ class Uint{
             if(uint.avalible==false)throw new Error("sorry this uint is bought")
             const user=await userModel.findById(req.body.customer)
             if(!user)throw new Error("user not exist")
-            const payment= new PaymentModel({uintId:uint._id,userId:user._id,payment:req.body.payment})
+            const payment= new PaymentModel({uintId:uint._id,userId:user._id,payment:req.body.payment,employeeId:req.user.id})
             await payment.save()
             console.log(payment);
             // uint.payment=req.body.payment
@@ -54,7 +61,7 @@ class Uint{
             user.uints.push(uint)
             await payment.save()
             console.log(payment);
-            await user.save()
+            await user.save({validateBeforeSave: false})
             myhelper.resHandler(res,200,true,payment,"uint bought successfully")
 
         }
@@ -88,6 +95,7 @@ class Uint{
             const user=await userModel.findById(req.body.customer)
             if(!user)throw new Error("user not exist")
             let payment=await PaymentModel.findOne({userId:user.id,uintId:uint.id})
+            if(!payment) throw new Error("payment with this custmoer and uint not found")
             for (let i = 0; i < payment.restofthepayments.length; i++) {
                 if(payment.restofthepayments[i].paied!=true){
                     console.log(i);

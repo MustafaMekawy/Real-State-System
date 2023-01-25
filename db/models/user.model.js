@@ -2,6 +2,7 @@ const validator = require("validator")
 const bcryptjs = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const mongoose=require("mongoose")
+const crypto = require('crypto');
 const UserSchema=mongoose.Schema({
     roleId:{
         type:mongoose.Schema.Types.ObjectId,
@@ -16,7 +17,7 @@ const UserSchema=mongoose.Schema({
         type:String, 
         trim:true,
         lowercase:true,
-        minLength: 5,
+        minLength: 3,
         maxLength:20,
         required:true
     }, 
@@ -24,7 +25,7 @@ const UserSchema=mongoose.Schema({
         type:String, 
         trim:true,
         lowercase:true,
-        minLength: 5,
+        minLength: 3,
         maxLength:20,
         required:true
     }, 
@@ -46,6 +47,10 @@ const UserSchema=mongoose.Schema({
             }
         }
     }, 
+    image:{
+        type:String, 
+        trim:true
+    },
     status:{
         type:Boolean,
         default: false
@@ -61,6 +66,16 @@ const UserSchema=mongoose.Schema({
         required:true,
         // match: ''
     }, 
+    passwordConfirmation: {
+        type: String,
+        required: true,
+        validate: {
+          validator: function (p) {
+            return this.password == p;
+          },
+          message: 'invalid password confirmation',
+        },
+      },
     gender:{
         type:String, 
         trim:true,
@@ -77,6 +92,8 @@ const UserSchema=mongoose.Schema({
                 throw new Error ("invalid number")
         }
     },
+    resetPasswordToken: String,
+    resetExpiresTime: Date,
     addresses: [
         {
             addressType:{
@@ -87,24 +104,33 @@ const UserSchema=mongoose.Schema({
             details:{}
         }
     ], 
-    tokens:[{
-        token:{ type:String, required: true}
-}]
+//     tokens:[{
+//         token:{ type:String, required: true}
+// }]
 }, {
     timestamps:true
 })
 UserSchema.pre("save", async function(){
     if(this.isModified('password')){
         this.password = await bcryptjs.hash(this.password, 8)
+        this.passwordConfirmation = undefined;
     }
 })
-UserSchema.statics.loginUser = async(email, password) => {
-    const userData = await User.findOne({email})
-    if(!userData) throw new Error("invalid email")
-    const validatePassword = await bcryptjs.compare(password, userData.password)
-    if(!validatePassword) throw new Error("invalid password")
-    return userData
-}
+UserSchema.statics.Passcheck = async function (user, password) {
+    const passVaild = await bcryptjs.compare(password, user.password);
+    console.log(passVaild);
+    // if (!passVaild) throw new Error('invalid password');
+    return passVaild;
+  };
+  UserSchema.statics.logincheck = async function (email, password) {
+    const user = await User.findOne({ email });
+    if (!user) throw new Error('invalid email');
+    if (!(await this.Passcheck(user, password))) {
+      throw new Error('invalid password');
+    }
+    return user;
+  };
+
 UserSchema.methods.toJSON = function(){
     const data = this.toObject()
     delete data.__v
@@ -112,13 +138,19 @@ UserSchema.methods.toJSON = function(){
     // delete data.tokens
     return data
 }
-UserSchema.methods.generateToken = async function(){
-    const userData = this
-    const token = jwt.sign({_id: userData._id}, process.env.tokenPass)
-    userData.tokens = userData.tokens.concat({token})
-    // userData.tokens.push({token})
-    await userData.save()
+UserSchema.methods.generateToken = async function(req){
+    const user= this
+    const token = jwt.sign({_id: user._id}, process.env.tokenPass)
+    // user.tokens = user.tokens.concat({token})
+    // if(req.url == '/rejester') await user.save()
+    // await user.save({validateBeforeSave: false})
     return token
 }
+UserSchema.methods.createPasswordResetToken = function () {
+    const resetToken = crypto.randomBytes(32).toString('hex');
+    this.resetPasswordToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+    this.resetExpiresTime = Date.now() + 10 * 60 * 1000;
+    return resetToken;
+  };
 const User=mongoose.model("User",UserSchema)
 module.exports=User

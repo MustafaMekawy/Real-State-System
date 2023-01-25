@@ -3,7 +3,8 @@ const myhelper=require("../helper")
 class Project{
     static createProject=async(req,res)=>{
         try{
-            const project= new projectModel(req.body)
+            const obj={image:req.file.path,name:req.body.name,projectType:req.body.projectType,Areas:req.body.Areas}
+            const project= new projectModel(obj)
             await project.save()
             myhelper.resHandler(res,200,true,project,"project added successfully")
         }

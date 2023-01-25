@@ -8,6 +8,10 @@ const PaymentSchema=mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:"User"
     },
+    employeeId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"User"
+    },
     payment:{
         type:String,
         enum:["cash","semi-yearly","quarter-yearly"]

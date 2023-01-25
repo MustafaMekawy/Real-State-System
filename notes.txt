@@ -6,8 +6,8 @@ user=>
  - change status *
  - edit password*
  - delete account*
- - forget password
- - reset password
+ - forget password*
+ - reset password*
     show all projects*
     show single project*
     show all building*
@@ -20,7 +20,7 @@ user=>
  delete any user*
  creatrole *
  addurl*
- -----------------------
+ --------------------------------
  employee:
  rejester an customer*
  buy uint for user   : throw to link payments => كاش =>set avalible==false=> add unitId in user=> ايصال
@@ -29,7 +29,7 @@ user=>
  premium types :  Semi-yearly,  Quarterly
  show all uints bought*
  show all uints avalible*
- --------------------
+ ---------------------------------
  customer:
 get my uints* ناقص امسح اليوز من العرض
 get my اقساط*

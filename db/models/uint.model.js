@@ -21,6 +21,10 @@ const UintSchema=mongoose.Schema({
    area:{
        type:Number,
        default:90
+   },
+   image:{
+    type:String, 
+    trim:true
    }
 })
 const uint=mongoose.model("Uint",UintSchema)

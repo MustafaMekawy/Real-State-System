@@ -22,6 +22,10 @@ const bulidSchema=mongoose.Schema({
         numofuints:{
             type:Number,
             
+    },
+    image:{
+        type:String, 
+        trim:true
     }
 })
 
